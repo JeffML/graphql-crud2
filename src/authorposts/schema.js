@@ -10,11 +10,34 @@ const typeDefs =
     author(id: Int!): Author
   }
 
-  # this schema allows the following mutation:
+  # this schema allows the following mutations:
+input AddBookInput {
+    ISBN: String!
+    title: String!
+}
+
+input RemoveBookInput {
+    bookId: Int!
+}
+  input UpdateBookInput {
+      ISBN: String!
+      title: String!
+  }
+  
   extend type Mutation {
-    upvotePost (
-      postId: Int!
-    ): Post
+    Post(postId: Int!): PostOps
+    Author(id: Int!): AuthorOps
+  }
+
+  type PostOps {
+      upvote: Post
+      downvote: Post
+  }
+
+  type AuthorOps {
+      addBook(input: AddBookInput!): Int
+      removeBook(input: RemoveBookInput! ): Boolean
+      updateBook(input: UpdateBookInput!): Int
   }
 `;
 
