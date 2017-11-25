@@ -1,7 +1,10 @@
 import {
     authors,
-    posts
+    posts,
+    PostOps
 } from './dataSource';
+
+/* eslint-disable no-unused-labels */
 
 const rootResolvers = {
     Query: {
@@ -9,23 +12,11 @@ const rootResolvers = {
         author: (_, {
             id
         }) => {
-            console.log("hola!");
             return authors.find(a => a.id === id)
         }
     },
     Mutation: {
-        Post: (_, {
-            postId
-        }) => {
-            {
-                const post = posts.find(p => p.id === postId);
-                if (!post) {
-                    throw new Error(`Couldn't find post with id ${postId}`);
-                }
-                post.votes += 1;
-                return post;
-            }
-        }
+        Post: () => Promise.resolve(PostOps)
     },
     Author: {
         posts: (author) => posts.filter(p => p.authorId === author.id)

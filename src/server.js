@@ -25,7 +25,9 @@ server.use('/graphiql', graphiqlExpress({
 query PostsForAuthor {
   author(id: 1) {
     firstName
+    lastName
     posts {
+      id
       title
       votes
     }

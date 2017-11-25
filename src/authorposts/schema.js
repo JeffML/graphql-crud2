@@ -23,15 +23,15 @@ input RemoveBookInput {
       ISBN: String!
       title: String!
   }
-  
+
   extend type Mutation {
-    Post(postId: Int!): PostOps
+    Post: PostOps
     Author(id: Int!): AuthorOps
   }
 
   type PostOps {
-      upvote: Post
-      downvote: Post
+      upvote(postId: Int!): Post
+      downvote(postId: Int!): Post
   }
 
   type AuthorOps {

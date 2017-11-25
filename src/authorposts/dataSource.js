@@ -34,7 +34,30 @@ const posts = [{
     votes: 7
 }];
 
+const voteHandler = (postId, updown) => {
+    return new Promise((resolve, reject) => {
+        const post = posts.find(p => p.id === postId);
+        if (!post) {
+            reject(`Couldn't find post with id ${postId}`);
+        }
+        post.votes += updown;
+        resolve(post);
+    })
+};
+
+const PostOps =
+    ({
+        upvote: ({
+            postId
+        }) => voteHandler(postId, 1),
+        downvote: ({
+            postId
+        }) => voteHandler(postId, -1)
+    });
+
+
 export {
     authors,
-    posts
+    posts,
+    PostOps
 };
