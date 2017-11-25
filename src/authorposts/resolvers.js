@@ -8,13 +8,16 @@ const rootResolvers = {
         posts: () => posts,
         author: (_, {
             id
-        }) => authors.find(a => a.id === id)
+        }) => {
+            console.log("hola!");
+            return authors.find(a => a.id === id)
+        }
     },
     Mutation: {
         Post: (_, {
             postId
         }) => {
-            upvote: {
+            {
                 const post = posts.find(p => p.id === postId);
                 if (!post) {
                     throw new Error(`Couldn't find post with id ${postId}`);

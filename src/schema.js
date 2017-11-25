@@ -3,7 +3,7 @@
 
 import {
     makeExecutableSchema,
-    addMockFunctionsToSchema
+    // addMockFunctionsToSchema
 } from 'graphql-tools';
 
 import {
@@ -12,15 +12,10 @@ import {
 } from './authorposts';
 
 import {
-    schema as myLittleTypoSchema,
-    resolvers as myLittleTypeResolvers
-} from './myLittleDomain';
-
-import {
     merge
 } from 'lodash';
 
-import mocks from './mocks'
+// import mocks from './mocks'
 
 const baseSchema = [
     `
@@ -37,18 +32,18 @@ const baseSchema = [
 ]
 
 // Put schema together into one array of schema strings and one map of resolvers, like makeExecutableSchema expects
-const schema = [...baseSchema, ...authorpostsSchema, ...myLittleTypoSchema]
+const schema = [...baseSchema, ...authorpostsSchema]
 
 const options = {
     typeDefs: schema,
-    resolvers: merge(authorpostsResolvers, myLittleTypeResolvers)
+    resolvers: merge(authorpostsResolvers)
 }
 
 const executableSchema = makeExecutableSchema(options);
 
-addMockFunctionsToSchema({
-    schema: executableSchema,
-    mocks: mocks,
-})
+// addMockFunctionsToSchema({
+//     schema: executableSchema,
+//     // mocks: mocks,
+// })
 
 export default executableSchema;
