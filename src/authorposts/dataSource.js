@@ -4,12 +4,16 @@ const authors = [{
     lastName: 'Coleman'
 }, {
     id: 2,
-    firstName: 'Sashki',
+    firstName: 'Sashko',
     lastName: 'Stubailo'
 }, {
     id: 3,
     firstName: 'Mikhail',
     lastName: 'Novikov'
+}, {
+    id: 4,
+    firstName: 'Jeff',
+    lastName: 'Lowery'
 }];
 
 const posts = [{
@@ -34,6 +38,20 @@ const posts = [{
     votes: 7
 }];
 
+var books = [{
+    authorId: 2,
+    ISBN: "233-9870987098",
+    title: "Navigating Your Transition to GraphQL"
+}, {
+    authorId: 3,
+    ISBN: "978-4322342222",
+    title: "The Nature of Sensation"
+}, {
+    authorId: 4,
+    ISBN: "978-1930110151",
+    title: "XML Schema Elucidated"
+}, ]
+
 const voteHandler = (postId, updown) => {
     return new Promise((resolve, reject) => {
         const post = posts.find(p => p.id === postId);
@@ -55,9 +73,49 @@ const PostOps =
         }) => voteHandler(postId, -1)
     });
 
+const addBook = (book, authorId) => {
+    console.log("addBook", book, authorId)
+    return new Promise((resolve, reject) => {
+        book.authorId = authorId
+        books.push(book)
+        resolve(books.length)
+    })
+}
+
+const removeBook = (book, authorId) => {
+    return new Promise((resolve, reject) => {
+        books = books.filter(b => b.ISBN !== book.ISBN && b.authorId === authorId);
+        resolve(books.length)
+    })
+}
+
+const updateBook = (book, authorId) => {
+    return new Promise((resolve, reject) => {
+        let old = books.find(b => b.ISBN === book.ISBN && b.authorId === authorId);
+        if (!old) {
+            reject(`Book with ISBN = ${book.ISBN} not found`)
+            return
+        }
+        resolve(Object.assign(old, book))
+    })
+}
+
+const AuthorOps = (authorId) => ({
+    addBook: ({
+        input
+    }) => addBook(input, authorId),
+    removeBook: ({
+        input
+    }) => removeBook(input, authorId),
+    updateBook: ({
+        input
+    }) => updateBook(input, authorId)
+})
 
 export {
     authors,
     posts,
-    PostOps
+    books,
+    PostOps,
+    AuthorOps
 };

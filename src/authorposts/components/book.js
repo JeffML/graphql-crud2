@@ -1,5 +1,6 @@
 export default `
   type Book {
-    ISBN: String
-    title: String
+    authorId: Int!
+    ISBN: String!
+    title: String!
 }`

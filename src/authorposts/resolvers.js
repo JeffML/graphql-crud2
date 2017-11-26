@@ -1,7 +1,9 @@
 import {
     authors,
     posts,
-    PostOps
+    books,
+    PostOps,
+    AuthorOps
 } from './dataSource';
 
 /* eslint-disable no-unused-labels */
@@ -16,10 +18,14 @@ const rootResolvers = {
         }
     },
     Mutation: {
-        Post: () => Promise.resolve(PostOps)
+        Post: () => PostOps,
+        Author: (_, {
+            id
+        }) => AuthorOps(id)
     },
     Author: {
-        posts: (author) => posts.filter(p => p.authorId === author.id)
+        posts: (author) => posts.filter(p => p.authorId === author.id),
+        books: (author) => books.filter(b => b.authorId === author.id)
     },
     Post: {
         author: (post) => authors.find(a => a.id === post.authorId)
