@@ -12,14 +12,15 @@ const typeDefs =
       }
 
       # this schema allows the following mutations:
-    input AddBookInput {
-        ISBN: String!
-        title: String!
-    }
+        input AddBookInput {
+            ISBN: String!
+            title: String!
+        }
 
-    input RemoveBookInput {
-        bookId: Int!
-    }
+        input RemoveBookInput {
+            bookId: Int!
+        }
+
       input UpdateBookInput {
           ISBN: String!
           title: String!
